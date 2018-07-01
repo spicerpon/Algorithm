@@ -1,0 +1,60 @@
+import java.util.Random;
+
+public class Solution {
+
+	public static int maxSize = 20;
+	public static int arr[];
+	public static int mArr[][];
+
+	public static void main(String[] args) {
+
+		Random random = new Random();
+		arr = new int[maxSize];
+
+		for (int a = 0; a < maxSize; a++) {
+			arr[a] = random.nextInt(maxSize * 5);
+		}
+
+		for (int a = 0; a < arr.length; a++) {
+			System.out.print(arr[a] + " ");
+		}
+		System.out.println("");
+
+		for (int a = 1; a < arr.length; a++) {
+			/* index = a */
+			int b = a - 1; /* index - 1 */
+
+			if (arr[a] < arr[b]) {
+				for (int c = b; c >= -1; c--) {
+					if (c == -1) {
+						int temp = arr[0];
+						arr[0] = arr[a];
+
+						for (int d = a; d > 1; d--) {
+							arr[d] = arr[d - 1];
+						}
+
+						arr[1] = temp;
+						break;
+					} else if (arr[a] >= arr[c]) {
+						int temp = arr[c + 1];
+						arr[c + 1] = arr[a];
+
+						for (int d = a; d > c + 2; d--) {
+							arr[d] = arr[d - 1];
+						}
+
+						arr[c + 2] = temp;
+						break;
+					}
+				}
+			}
+			/* repeat */
+			for (int o = 0; o < arr.length; o++) {
+				System.out.print(arr[o] + " ");
+			}
+			System.out.println("");
+		}
+
+	}
+}
