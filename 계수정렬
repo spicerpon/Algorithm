@@ -1,0 +1,45 @@
+import java.util.Random;
+
+public class Solution {
+
+	public static int maxSize = 20;
+	public static int arr[];
+
+	public static void main(String[] args) {
+
+		Random random = new Random();
+		arr = new int[maxSize];
+		int maxValue = 0;
+
+		for (int a = 0; a < maxSize; a++) {
+			arr[a] = random.nextInt(maxSize * 10);
+
+			if (maxValue < arr[a]) {
+				maxValue = arr[a];
+			} // 배열에 저장된 값들 중 가장 큰 값 찾기
+		}
+
+		// 계수 정렬 시작
+		maxValue++;
+		int num[] = new int[maxValue];
+
+		for (int a = 0; a < maxSize; a++) {
+			num[arr[a]]++; // 저장 공간에 각 값의 빈도수 저장
+		}
+
+		for (int a = 1; a < maxValue; a++) {
+			num[a] = num[a] + num[a - 1]; // 누적 빈도수 저장
+		}
+
+		int newArr[] = new int[maxSize]; // 새로 정렬될 값을 저장할 배열
+
+		for (int a = maxSize - 1; a >= 0; a--) {
+			num[arr[a]]--; // 배열 값에 해당하는 누적 인덱스 -1
+			newArr[num[arr[a]]] = arr[a]; // -1된 인덱스의 위치에 값 삽임
+		}
+
+		for (int a = 0; a < maxSize; a++) {
+			System.out.print(newArr[a] + " ");
+		}
+	}
+}
