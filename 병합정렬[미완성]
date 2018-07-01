@@ -1,0 +1,65 @@
+import java.util.Random;
+
+public class Solution {
+
+	public static int maxSize = 26;
+	public static int arr[];
+	public static int mArr[][];
+
+	public static void main(String[] args) {
+
+		Random random = new Random();
+		arr = new int[maxSize];
+
+		for (int a = 0; a < maxSize; a++) {
+			arr[a] = random.nextInt(maxSize * 10);
+		}
+
+		for (int a = 0; a < arr.length; a++) {
+			System.out.print(arr[a] + " ");
+		}
+		System.out.println("");
+
+		MergeSort(1);
+	}
+
+	static void MergeSort(int n) {
+
+		for (int a = 0; a < arr.length; a += n * 2) {
+
+			int tArr[] = new int[n * 2];
+			int idx = 0, i = a, j = a + n;
+			int iMax = (a + n < arr.length) ? a + n : arr.length,
+					jMax = (a + n * 2 < arr.length) ? a + n * 2 : arr.length;
+
+			while (i < iMax || j < jMax) {
+				if (i < iMax) {
+					if (!(j < jMax) || arr[j] >= arr[i]) {
+						tArr[idx++] = arr[i++];
+					} else if (j < jMax) {
+						tArr[idx++] = arr[j++];
+					}
+				} else if (j < jMax) {
+					if (!(i < iMax) || arr[i] >= arr[j]) {
+						tArr[idx++] = arr[j++];
+					} else if (i < iMax) {
+						tArr[idx++] = arr[i++];
+					}
+				}
+			}
+
+			for (int b = 0; b < idx; b++) {
+				arr[a + b] = tArr[b];
+			}
+		}
+
+		for (int a = 0; a < arr.length; a++) {
+			System.out.print(arr[a] + " ");
+		}
+		System.out.println("");
+
+		if (arr.length > n * 2)
+			MergeSort(n * 2);
+	}
+
+}
