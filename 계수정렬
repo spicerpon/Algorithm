@@ -1,0 +1,53 @@
+import java.util.Random;
+
+public class Solution {
+
+	public static int maxSize = 32;
+	public static int arr[];
+
+	public static void main(String[] args) {
+
+		Random random = new Random();
+		arr = new int[maxSize];
+		int maxLength = 0;
+
+		for (int a = 0; a < maxSize; a++) {
+			arr[a] = random.nextInt(maxSize * 10);
+
+			if (maxLength < String.valueOf(arr[a]).length()) {
+				maxLength = String.valueOf(arr[a]).length();
+			} // 배열에 저장된 값들 중 자릿수가 가장 큰 값 찾기
+		}
+
+		// 기수 정렬 실행
+		int modDiv = 10;
+		int div = 1;
+
+		for (int a = 0; a < maxLength; a++) {
+
+			int bucket[][] = new int[10][maxSize]; // 자릿수를 저장할 저장공간
+			int idx[] = new int[10]; // 자릿수 숫자별 원소 저장 갯수
+
+			for (int b = 0; b < maxSize; b++) {
+				int mod = arr[b] % modDiv; // 자릿수를 구하기 위해 나머지 구하기
+				mod /= div; // 나누기 몫을 통해 완벽한 한자릿수 구하기
+				bucket[mod][idx[mod]++] = arr[b];
+			}
+
+			int arrIdx = 0;
+			for (int b = 0; b < 10; b++) {
+				for (int c = 0; c < idx[b]; c++) {
+					arr[arrIdx++] = bucket[b][c];
+				}
+			} // 저장공간에서 순서대로 원소 꺼내기
+
+			modDiv *= 10;
+			div *= 10;
+		}
+
+		for (int a = 0; a < maxSize; a++) {
+			System.out.print(arr[a] + " ");
+		}
+	}
+
+}
