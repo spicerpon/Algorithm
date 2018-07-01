@@ -1,0 +1,51 @@
+import java.util.Random;
+
+public class Solution {
+
+	public static int maxSize = 512;
+	public static int arr[];
+
+	public static void main(String[] args) {
+
+		Random random = new Random();
+		arr = new int[maxSize];
+
+		for (int a = 0; a < maxSize; a++) {
+			arr[a] = random.nextInt(maxSize * 10);
+		}
+
+		QuickSort(0, arr.length);
+	}
+
+	static void QuickSort(int pvt, int length) {
+
+		int fPvt = pvt;
+		// System.out.println("피벗 기준 값은 " + arr[pvt] + "입니다.");
+
+		for (int a = fPvt; a < length; a++) {
+			if (arr[pvt] > arr[a]) {
+				int temp = arr[a]; // 피벗(0) 기준 값보다 작지만 오른쪽에 있는 값
+
+				for (int b = a - 1; b >= fPvt; b--) {
+					arr[b + 1] = arr[b];
+				} // 찾은 값을 들어올리고 왼쪽에 있는 값들 한 칸씩 오른쪽으로 이동
+
+				arr[fPvt] = temp;// 피벗(0)값에 들어 올린 값 삽입
+				pvt++;
+			}
+		}
+
+		for (int a = 0; a < arr.length; a++) {
+			System.out.print(arr[a] + " ");
+		}
+
+		System.out.println("");
+
+		if (pvt - fPvt > 1)
+			QuickSort(fPvt, pvt); // 피벗 왼쪽 값들에 대한 정렬
+		if (pvt + 1 < length)
+			QuickSort(pvt + 1, length); // 피벗 오른쪽 값들에 대한 정렬
+
+	}
+
+}
